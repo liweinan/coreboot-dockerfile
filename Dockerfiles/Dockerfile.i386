@@ -1,3 +1,3 @@
-FROM eyedeekay/coreboot-dockerfile:deps
+FROM weli/build-machine-deps
 RUN make crossgcc-i386
 RUN make crosstools-i386
