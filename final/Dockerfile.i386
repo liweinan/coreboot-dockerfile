@@ -12,8 +12,7 @@ WORKDIR /root/heads/build/coreboot-4.8.1
 RUN grep -rl '\-Werror'  | grep Makefile | xargs -I % sed -ie 's/\-Werror//g' %
 
 WORKDIR /root/heads
-RUN set -x && ls /root/
-RUN set -x && pwd && ls && make BOARD=kgpe-d16
+RUN make BOARD=kgpe-d16
 
 
 
