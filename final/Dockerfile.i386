@@ -3,20 +3,16 @@ RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y git make build-essential gnat flex bison \
     libncurses5-dev wget zlib1g-dev python python3 autoconf libfreetype6-dev \
     unifont libelf-dev bc cpio
-# RUN adduser --home /home/coreboot/ --shell /bin/bash --gecos 'coreboot,,,,' \
-#     --disabled-password coreboot
-WORKDIR /root/
-git clone https://github.com/osresearch/heads
-cd heads
-du -h
-# http://osresearch.net/Building
-# make BOARD=kgpe-d16
 
-# USER coreboot
-# RUN git clone https://review.coreboot.org/coreboot /home/coreboot/coreboot
-# WORKDIR /home/coreboot/coreboot
-# RUN git submodule update --init --checkout
-# RUN make iasl
-# RUN make crossgcc-i386
-# RUN make crosstools-i386
+WORKDIR /root/
+# http://osresearch.net/Building
+RUN git clone https://github.com/osresearch/heads
+
+WORKDIR /root/heads/build/coreboot-4.8.1
+RUN grep -rl '\-Werror'  | grep Makefile | xargs -I % sed -ie 's/\-Werror//g' %
+
+WORKDIR /root/head
+RUN make BOARD=kgpe-d16
+
+
 
