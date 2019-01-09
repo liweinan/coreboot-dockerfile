@@ -8,11 +8,20 @@ WORKDIR /root/
 # http://osresearch.net/Building
 RUN git clone https://github.com/osresearch/heads
 
+
+WORKDIR /root/heads
+# fail at first time
+RUN make BOARD=kgpe-d16 ; exit 0
+
+# fix build error
 WORKDIR /root/heads/build/coreboot-4.8.1
 RUN grep -rl '\-Werror'  | grep Makefile | xargs -I % sed -ie 's/\-Werror//g' %
 
+# run again
 WORKDIR /root/heads
 RUN make BOARD=kgpe-d16
+
+
 
 
 
